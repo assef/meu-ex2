@@ -116,6 +116,28 @@ Código **aberto para leitura e fork**. **Não aceito PRs** — eu só implement
 funções que eu uso. Se você quer mais, **faça um fork** à vontade. Veja
 [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Créditos
+
+Este projeto não existiria sem o trabalho de quem veio antes:
+
+- **Ravi — [@appsdecarro](https://www.instagram.com/appsdecarro)** (projeto **Sapo** /
+  EX Auto, [`swimapps/CentralEXAuto`](https://github.com/swimapps/CentralEXAuto)).
+  Usei o app dele como **referência principal**: o mecanismo de acesso via `adbd`
+  local, o controle dos parâmetros do carro e a ativação do CarPlay. Valeu, Ravi! 🙏
+- **[`rddyas002/drive_assist`](https://github.com/rddyas002/drive_assist)** — projeto
+  open-source pro próprio Geely EX2 / Geometry E. Usei como referência (telemetria
+  ABRP) e os **stubs de compilação do `android.car`** (`app/car-stubs/`, Apache-2.0)
+  vêm de lá.
+
+Projetos consultados na pesquisa de CarPlay sem fio (não usados no código):
+[CatPlay](https://github.com/catplay-labs/catplay) e
+[ludwig-v/wireless-carplay-dongle-reverse-engineering](https://github.com/ludwig-v/wireless-carplay-dongle-reverse-engineering).
+
+## Versões
+
+Veja [CHANGELOG.md](CHANGELOG.md). A **v3.1** é a primeira versão pública (o
+histórico anterior foi desenvolvimento privado).
+
 ## Licença
 
 [MIT](LICENSE).
