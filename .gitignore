@@ -18,3 +18,7 @@ app/compiled_res.zip
 *SupportDeviceList*
 *IndexDevicePrefs*
 *.token
+
+# desbloqueio gerado localmente (precisa de signapk + seu zip oficial)
+dist/unlock/
+dist/*-update.zip

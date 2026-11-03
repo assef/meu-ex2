@@ -49,38 +49,44 @@ responsável pelo seu carro e pela sua garantia.
 > Carlinkit) no CarPlay com fio do carro. No dia a dia, **CarPlay por cabo** é o
 > caminho estável — e ainda dá internet pra central (útil pro ABRP).
 
-## Instalação (APK pré-compilado)
+## Instalação
 
-A central expõe o `adbd` na porta **5555 sem autenticação** — é assim que o app
-roda como `system` (assinado com a *platform key* pública do AOSP, que o ROM aceita).
+Há dois cenários:
+
+### A) Primeiro install, ou **após um reset de fábrica** → desbloqueio por pendrive
+
+Depois de um reset, a central **fecha o ADB**. O único caminho é um **OTA por pendrive**
+(menu secreto → atualização por USB) que abre o ADB **e** instala o app de uma vez —
+sem instalar o Sapo. Passo a passo completo em **[install/DESBLOQUEIO.md](install/DESBLOQUEIO.md)**.
+
+> Crédito do método ao **Ravi / [@appsdecarro](https://www.instagram.com/appsdecarro)**
+> (ver [Créditos](#créditos)).
+
+### B) Atualizar / reinstalar (ADB já aberto) → por Wi-Fi
+
+Com o ADB já aberto (depois do desbloqueio), a central expõe o `adbd` na porta **5555
+sem autenticação** e aceita o app assinado com a *platform key* pública do AOSP. Então
+é só instalar por Wi-Fi:
 
 1. Instale o **Android platform-tools** (`adb`) no computador.
-2. Deixe a **central e o computador na mesma rede Wi-Fi**.
-3. Rode o script:
+2. Central e computador na **mesma rede Wi-Fi**.
+3. Rode:
 
 **macOS / Linux**
 ```sh
 cd install
 ./install.sh                 # procura a central na rede
-# ou, se souber o IP:
-./install.sh 192.168.1.123
+./install.sh 192.168.1.123   # ...ou informando o IP
 ```
 
 **Windows** (não testado pelo autor — relatos bem-vindos)
 ```powershell
 cd install
 .\install.ps1
-# ou:
 .\install.ps1 192.168.1.123
 ```
 
 O script conecta via `adb`, instala o `dist/meuex2.apk` e abre o app.
-
-### Reinstalar após revisão / reset de fábrica
-
-Nas revisões eu **reseto a central** (para evitar questões de garantia) e reinstalo
-depois. É só repetir o passo de instalação acima — a central volta com o `adbd`
-aberto de fábrica, então o script reinstala sem nenhum pré-passo.
 
 ## Compilar do código
 
