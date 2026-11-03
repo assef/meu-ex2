@@ -55,12 +55,66 @@ Há dois cenários:
 
 ### A) Primeiro install, ou **após um reset de fábrica** → desbloqueio por pendrive
 
-Depois de um reset, a central **fecha o ADB**. O único caminho é um **OTA por pendrive**
-(menu secreto → atualização por USB) que abre o ADB **e** instala o app de uma vez —
-sem instalar o Sapo. Passo a passo completo em **[install/DESBLOQUEIO.md](install/DESBLOQUEIO.md)**.
+Depois de um reset, a central **fecha o ADB**, então não dá pra instalar por Wi-Fi. O
+único caminho é um **OTA por pendrive**, aplicado pelo recovery via o **menu secreto →
+atualização por USB**. O nosso pacote **abre o ADB e instala o app de uma vez — sem Sapo.**
 
-> Crédito do método ao **Ravi / [@appsdecarro](https://www.instagram.com/appsdecarro)**
-> (ver [Créditos](#créditos)).
+> **Crédito do método** (menu secreto, OTA por USB, truque de abrir o ADB) ao
+> **Ravi / [@appsdecarro](https://www.instagram.com/appsdecarro)** (projeto Sapo / EX Auto).
+> Nosso pacote só reusa o `update-binary` stock e troca o payload pelo nosso app. 🙏
+
+#### ⚠️ Antes de começar
+- Só mexe em `/data` (nunca `/system`), termina sem apagar nada, e **`ERRO 7` é esperado**.
+- Pacote rejeitado pela assinatura = nada acontece. Preload do app falhar = instale por
+  Wi-Fi depois (passo B). **Um reset de fábrica reverte tudo.** Por sua conta e risco.
+
+#### 1. Pegue o pacote de desbloqueio
+- **Pronto**: baixe o `meuex2-unlock-update.zip` da [última release](https://github.com/assef/meu-ex2/releases/latest)
+  (serve se o seu firmware casar com `3C6025_SW0E22H` — cobre as versões 1111 e 1114).
+- **Ou gere o seu** (ver [Compilar do código](#compilar-do-código) + `tools/build-unlock.sh`).
+
+#### 2. Prepare um pendrive FAT32
+Coloque o pacote na **raiz** do pendrive, nesta estrutura exata:
+```
+PENDRIVE/
+└── 3C6025_SW0E22H/
+    └── OS/
+        └── update.zip      ← o meuex2-unlock-update.zip, renomeado para update.zip
+```
+Ou use o script (gera a estrutura e copia pra você):
+```sh
+cd install && ./preparar_pendrive.sh          # macOS/Linux
+#   (Windows: .\preparar_pendrive.ps1)
+```
+
+#### 3. Plugue o pendrive e abra o menu secreto da central
+1. Plugue o pendrive numa porta USB da central.
+2. Abra o app de **Telefone (dialer)** da central — **sem** estar conectado a nenhum
+   Bluetooth.
+3. Digite o código do menu secreto:
+
+   **`#*` + (mês + 10) + dia + hora**
+
+   | parte | como calcular | exemplo (11/set, 14h) |
+   |---|---|---|
+   | mês + 10 | mês com 2 dígitos **+ 10** | set = 09 → **19** |
+   | dia | dia do mês, 2 dígitos | **11** |
+   | hora | hora atual no **formato 12h**, 2 dígitos | 14h → **02** |
+
+   → código do exemplo: **`#*191102`**
+
+#### 4. Atualização por USB
+1. No menu secreto, toque no botão que começa com **"U"** (atualização por USB) —
+   é o **último botão da quarta linha**.
+2. Selecione o pacote do pendrive e confirme.
+3. **`ERRO 7` é esperado, não se preocupe.** (Dica do método: pise no freio e coloque em P.)
+4. Ao terminar, **reinicie a central**.
+
+#### 5. Pronto
+No boot, o ADB sobe (porta 5555) e o app **Meu EX2** já aparece. Daí em diante, pra
+**atualizar** é só Wi-Fi (passo B abaixo).
+
+> Detalhes técnicos e geração do pacote: **[install/DESBLOQUEIO.md](install/DESBLOQUEIO.md)**.
 
 ### B) Atualizar / reinstalar (ADB já aberto) → por Wi-Fi
 
