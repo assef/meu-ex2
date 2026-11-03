@@ -1,0 +1,20 @@
+# build artefacts
+app/obj/
+app/*.apk
+app/*.apk.idsig
+app/base.apk
+app/unsigned.apk
+app/aligned.apk
+app/classes.dex
+app/compiled_res.zip
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# nunca versionar dados pessoais puxados do carro (MACs, seriais, tokens)
+*SupportDeviceList*
+*IndexDevicePrefs*
+*.token

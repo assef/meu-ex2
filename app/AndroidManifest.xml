@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.geely.meuex2"
+    android:sharedUserId="android.uid.system"
+    android:versionCode="31" android:versionName="3.1">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.car.permission.CAR_CONTROL_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.TETHER_PRIVILEGED" />
+    <uses-permission android:name="android.permission.OVERRIDE_WIFI_CONFIG" />
+    <uses-permission android:name="android.permission.NETWORK_SETTINGS" />
+    <uses-sdk android:minSdkVersion="28" android:targetSdkVersion="28" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.car.permission.CAR_POWERTRAIN" />
+    <uses-permission android:name="android.car.permission.CAR_ENERGY" />
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_DOORS" />
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_WINDOWS" />
+    <uses-permission android:name="android.car.permission.CAR_VENDOR_EXTENSION" />
+    <uses-permission android:name="android.car.permission.CAR_EXTERIOR_ENVIRONMENT" />
+    <application android:label="Meu EX2" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        <activity android:name=".MainActivity" android:exported="true"
+                  android:screenOrientation="landscape" android:configChanges="orientation|screenSize|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".AbrpService" android:exported="false" android:directBootAware="true" />
+        <service android:name=".CentralService" android:exported="false" android:directBootAware="true" />
+        <service android:name=".ApplyService" android:exported="false" android:directBootAware="true" />
+        <receiver android:name=".BootReceiver" android:exported="true" android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.ACTION_BOOT_HU" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
