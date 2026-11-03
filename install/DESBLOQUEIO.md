@@ -36,6 +36,19 @@ APK=../dist/meuex2.apk \
 ./build-unlock.sh
 ```
 
+> **signapk + conscrypt**: o `signapk.jar` do AOSP usa o conscrypt (lib nativa). No
+> macOS (ou onde o nativo faltar) passe também o conscrypt no classpath:
+> ```sh
+> CONSCRYPT=/caminho/conscrypt-openjdk-uber-2.8.0.jar \
+> RAVI_ZIP=... SIGNAPK=... APK=... ./build-unlock.sh
+> ```
+> (`conscrypt-openjdk-uber` ≥ 2.6 tem a lib pra Apple Silicon; pegue no Maven Central.)
+
+> **Já tem um pacote pronto**: a [release](https://github.com/assef/meu-ex2/releases/latest)
+> traz `meuex2-unlock-update.zip` (o `update.zip` já assinado). Se a sua versão de
+> firmware casar com `3C6025_SW0E22H`, é só colocar na pasta `3C6025_SW0E22H/OS/update.zip`
+> do pendrive. **Pacote experimental, não testado pelo autor nesta release** — veja os riscos acima.
+
 Isso gera `dist/unlock/` (pendrive pronto) e `dist/meuex2-unlock-update.zip`.
 
 > **Nome da pasta do pendrive**: `3C6025_SW0E22H`. O updater da central casa por

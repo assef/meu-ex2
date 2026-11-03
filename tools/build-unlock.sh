@@ -118,15 +118,21 @@ abort("intentional_no_wipe");
 EOF
 
 # empacota (update-binary primeiro ajuda alguns recoveries) e assina (whole-file, -w)
-UNS="$WORK/unsigned.zip"; OUT_ZIP="dist/meuex2-unlock-update.zip"
-mkdir -p dist
+UNS="$WORK/unsigned.zip"; OUT_ZIP="../dist/meuex2-unlock-update.zip"
+mkdir -p ../dist
 ( cd "$Z" && zip -qrX "$UNS" META-INF/com/google/android/update-binary \
     META-INF/com/google/android/updater-script data )
-"$JAVA" -jar "$SIGNAPK" -w "$KEYDIR/platform.x509.pem" "$KEYDIR/platform.pk8" "$UNS" "$OUT_ZIP"
+# O signapk do AOSP usa conscrypt (lib nativa). No macOS ARM / onde faltar o nativo,
+# passe CONSCRYPT=/caminho/conscrypt-openjdk-uber-<ver>.jar (Maven Central) no classpath.
+if [ -n "${CONSCRYPT:-}" ]; then
+  "$JAVA" -cp "$CONSCRYPT:$SIGNAPK" com.android.signapk.SignApk -w "$KEYDIR/platform.x509.pem" "$KEYDIR/platform.pk8" "$UNS" "$OUT_ZIP"
+else
+  "$JAVA" -jar "$SIGNAPK" -w "$KEYDIR/platform.x509.pem" "$KEYDIR/platform.pk8" "$UNS" "$OUT_ZIP"
+fi
 echo "OTA assinado -> $OUT_ZIP ($(wc -c < "$OUT_ZIP") bytes)"
 
 # monta a pasta do pendrive
-PD="dist/unlock"; rm -rf "$PD"; mkdir -p "$PD/$FOLDER/OS"
+PD="../dist/unlock"; rm -rf "$PD"; mkdir -p "$PD/$FOLDER/OS"
 cp "$OUT_ZIP" "$PD/$FOLDER/OS/update.zip"
 echo "Pendrive pronto em: $PD/  (copie o conteúdo para a RAIZ de um pendrive FAT32)"
 echo "Estrutura: $FOLDER/OS/update.zip"
